@@ -12,18 +12,32 @@ const boxesContainer = document.querySelector("#boxes");
 createButton.addEventListener("click", createBoxes);
 destroyButton.addEventListener("click", destroyBoxes);
 
+
+
 function createBoxes(amount) {
+
   amount = parseInt(inputAmount.value);
-  for (let i = 0; i < amount; i += 1) {
-    const boxSize = 30 + i * 10;
-    const box = document.createElement("div");
-    box.style.width = `${boxSize}px`;
-    box.style.height = `${boxSize}px`;
-    box.style.backgroundColor = getRandomHexColor();
-    boxesContainer.append(box);
-}
+
+  const inputMin = Number(inputAmount.min);
+  const inputMax = Number(inputAmount.max);
+  const inputStep = Number(inputAmount.step);
+
+  if (amount < inputMin || amount > inputMax) {
+    alert("Допустимий діапазон значень 1-100");
+    inputAmount.value = "";
+  } else {
+    for (let i = 0; i < amount; i += inputStep) {
+      const boxSize = 30 + i * 10;
+      const box = document.createElement("div");
+      box.style.width = `${boxSize}px`;
+      box.style.height = `${boxSize}px`;
+      box.style.backgroundColor = getRandomHexColor();
+      boxesContainer.append(box);
+    }
+  }
 }
 
 function destroyBoxes() {
   boxesContainer.innerHTML = "";
+  inputAmount.value = "";
 }
